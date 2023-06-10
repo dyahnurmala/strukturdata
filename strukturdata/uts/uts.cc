@@ -5,7 +5,7 @@ using namespace std;
 struct mahasiswa{
     string nama;
     string nim;
-    string fakulta;
+    string Fakultas;
     string jurusan;
     string kota_asal;
     string alamat;
