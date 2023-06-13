@@ -1,3 +1,6 @@
+// Dyah Nurmala Sari
+// 20220801297
+
 #include<iostream>
 #include<string.h> 
 
