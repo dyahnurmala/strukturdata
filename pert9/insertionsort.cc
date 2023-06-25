@@ -18,7 +18,7 @@ int main ()
       {
             temp = NumList[i];
             j = i - 1;
-            while(NumList[j]<temp && j>=0)
+            while(NumList[j]>temp && j>=0)
             {
                   NumList[j+1] = NumList[j];
                   j--;
