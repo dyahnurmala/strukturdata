@@ -1,92 +1,76 @@
-#include <stdio.h>
-#include <stdlib.h>
+#include<iostream>
+using namespace std;
+template<typename type>
 
-//inisialisasi struct
-struct data{
-	int number;
-	//pointer untuk menampung percabangan kiri dan kanan
-	data *left, *right;
-}*root;
-
-//fungsi push untuk menambah data
-void push(data **current, int number){
-	//jika pointer current kosong maka akan membuat blok data baru
-	if((*current)==NULL){
-		(*current) = (struct data *)malloc(sizeof data);
-		//mengisi data
-		(*current)->number=number;
-		(*current)->left = (*current)->right = NULL;
-	//jika tidak kosong, maka akan dibandingkan apakah angka yang 
-	//ingin dimasukkan lebih kecil dari pada root
-	//kalau iya, maka belok ke kiri dan lakukan rekursif 
-	//terus menerus hingga kosong
-	}else if(number < (*current)->number){
-		push(&(*current)->left, number);
-	//jika lebih besar, belok ke kanan
-	}else if(number >= (*current)->number){
-		push(&(*current)->right, number);
-	}
-}
-
-//preOrder : cetak, kiri, kanan
-void preOrder(data **current){
-	if((*current)!=NULL){
-		printf("%d -> ", (*current)->number);
-		preOrder(&(*current)->left);
-		preOrder(&(*current)->right);
-	}
-}
-
-//inOrder : kiri, cetak, kanan
-void inOrder(data **current){
-	if((*current)!=NULL){
-		inOrder(&(*current)->left);
-		printf("%d -> ", (*current)->number);
-		inOrder(&(*current)->right);
-	}
-}
-
-//postOrder : kiri, kanan, cetak
-void postOrder(data **current){
-	if((*current)!=NULL){
-		postOrder(&(*current)->left);
-		postOrder(&(*current)->right);
-		printf("%d -> ", (*current)->number);
-	}
-}
-
-//searching data
-void search(data **current, int number){
-	//jika pointer current memiliki data
-	if((*current)!=NULL){
-		//cek, apakah datanya lebih kecil. Jika iya, belok ke kiri
-		if(number<(*current)->number){
-			search(&(*current)->left,number);
-		//jika lebih besar, maka belok ke kanan
-		}else if(number>(*current)->number){
-			search(&(*current)->right,number);
-		//jika sama dengan, maka angka ketemu
-		}else{
-			printf("Found : %d", (*current)->number);
-		}
-	//jika tidak ada data lagi (not found)
-	}else{
-		printf("Not Found.");
-	}
-}
-
+class Tree{
+    
+    struct Node{
+        type data;
+        Node* left;
+        Node* right;
+        
+        Node(type d){
+            this->data = d;
+            this->left = this->right = nullptr;
+        }
+    };
+public:
+    Node* Root=nullptr;
+    
+    Tree(){
+        Node* m =new Node('M');
+        Node* e =new Node('E');
+        Node* l =new Node('L');
+        Node* a =new Node('A');
+        Node* i =new Node('I');
+        Node* b =new Node('B');
+        Node* o =new Node('O');
+        Node* u =new Node('U');
+        Node* d =new Node('D');
+        m->left=e; m->right=l;
+        e->left=a; e->right=i;
+        l->left=b; l->right=o;
+        a->right=u;
+        o->left=d;
+        
+        Root=m;
+    }
+    
+    void preorder(Node* ptr){
+        if(ptr!=nullptr){
+            cout<<" "<<ptr->data;
+            preorder(ptr->left);
+            preorder(ptr->right);
+        }
+    }
+    
+    void inorder(Node* ptr){
+        if(ptr!=nullptr){
+            inorder(ptr->left);
+            cout<<" "<<ptr->data;
+            inorder(ptr->right);
+        }
+    }
+    
+    void postorder(Node* ptr){
+        if(ptr!=nullptr){
+            postorder(ptr->left);
+            postorder(ptr->right);
+            cout<<" "<<ptr->data;
+        }
+    }
+};
 int main(){
-	push(&root, 11);
-	push(&root, 22);
-	push(&root, 13);
-	push(&root, 15);
-	push(&root, 9);
-	inOrder(&root);
-	printf("\n");
-	preOrder(&root);
-	printf("\n");
-	postOrder(&root);
-	printf("\n");
-	search(&root,91);
-	getchar();
+    Tree<char> obj;
+    if(obj.Root==nullptr)
+    cout<<"Tree is empty!!";
+    else{
+    cout<<"\nPreorder Traversal\t:\t";
+    obj.preorder(obj.Root);
+    cout<<"\ninorder Traversal\t:\t";
+    obj.inorder(obj.Root);
+    cout<<"\nPostorder Traversal\t:\t";
+    obj.postorder(obj.Root);
+    }
+    return 0;
 }
